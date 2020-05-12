@@ -27,10 +27,14 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ *    counter1 - inside an outer function
+ *    counter2 - variable in global
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ *    counter1 - returns function that refers to a variable only present inside the scope where function is defined
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ *    counter1 is preferable most of the time, while counter2 would be beneficial if the count variable is needed elsewhere
  *
 */
 
@@ -56,11 +60,14 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+    let score = Math.floor(Math.random() *3);
+    return score;
 
 }
+
+console.log(inning())
 
 /* Task 3: finalScore()
 
@@ -76,11 +83,26 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(callback, innings){
 
-  /*Code Here*/
+  let homeScore = 0
+  let awayScore = 0
 
+  for (let i = 0; i < innings; i++) {
+
+    homeScore += callback()
+    awayScore += callback()
+
+  }
+  return {
+
+    Home: homeScore,
+    Away: awayScore
+
+  }
 }
+
+console.log(finalScore(inning, 9))
 
 /* Task 4: 
 
@@ -103,8 +125,33 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(callback, innings ) {
+
+  let homeScore = 0
+  let awayScore = 0
+  let suffix = ["st", "nd", "rd"]
+
+  for (let i = 0; i < innings; i++) {
+
+    homeScore += callback()
+    awayScore += callback()
+
+    if (i < 3) {
+
+console.log(`${i + 1}${suffix[i]} inning: ${homeScore} - ${awayScore}`)
+
+    } else {
+
+console.log(`${i + 1}th inning: ${homeScore} - ${awayScore}`)
+
+    }
+ }
+
+console.log(`\nFinal Score: ${homeScore} - ${awayScore}`)
+
 }
+
+scoreboard(inning, 9)
+console.dir(scoreboard)
 
 
